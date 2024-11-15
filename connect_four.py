@@ -10,7 +10,8 @@ class Game:
 
 class Grid():
 	def __init__(self, rows, columns):
-		self.rows = rows
-		self.columns = columns
-	
+		self._rows = rows
+		self._columns = columns
+		self._grid = None
+			
 	
