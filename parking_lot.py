@@ -33,34 +33,29 @@ class ParkingLot:
 			space_number += 1
 
 	def __get_open_parking_spot(self, size):
-		if not self.parking_spaces[size][0].is_empty:
+		if self.spaces_available[size] == 0:
 			return None
 		else:
-			return self.parking_spaces[size].popleft()
-
-	def __get_car_type_from_ticket(self, ticket_number):
-		return self.spaces[ticket_number]
+			for space in self.parking_spaces[size]:
+				if space.is_empty:
+					self.spaces_available[size] -= 1
+					return space
+			return None
 
 	def return_number_of_parking_spaces(self, size):
-		return len(self.parking_spaces[size])
+		return self.spaces_available[size]
 
 	def park(self, car):
 		parking_space = self.__get_open_parking_spot(car.type)
 		if parking_space:
-			if parking_space.park_car(car.type):
-				self.parking_spaces[car.type].append(parking_space)
-				return True
-			else:
-				self.parking_spaces[car.type].appendleft(parking_space)
-				return False
+			parking_space.park_car(car.type)
+			return True
 		return False
 
 	def unpark(self, ticket_number):
-		car_type = self.__get_car_type_from_ticket(ticket_number)
-		parking_space = self.parking_spaces[car_type].popleft()
+		parking_space = self.parking_spaces[ticket_number]
 		parking_space.unpark_car()
-		self.parking_spaces[car_type].append(parking_space)
-
+		self.spaces_available[parking_space.size] += 1
 
 
 class ParkingSpace:
