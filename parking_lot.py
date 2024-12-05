@@ -4,14 +4,34 @@ from enum import Enum
 
 class ParkingLot:
 
-	def __init__(self):
-		pass
+	def __init__(self, small_spaces, medium_spaces, large_spaces):
+		self.parking_spaces = {CarType.SMALL: [],
+							   CarType.MEDIUM: [],
+							   CarType.LARGE: []}
+		self.create_parking_lot(small_spaces, medium_spaces, large_spaces)
 
-	def create_parking_lot(self, size):
-		self.parking_spaces = [ParkingSpace(size) for _ in range(size)]
+
+	def create_parking_lot(self, small_spaces, medium_spaces, large_spaces):
+
+		space = 1
+
+		for _ in range(small_spaces):
+			self.parking_spaces[CarType.SMALL].append(ParkingSpace(CarType.SMALL))
+			space += 1
+		for _ in range(medium_spaces):
+			self.parking_spaces[CarType.MEDIUM].append(ParkingSpace(CarType.MEDIUM))
+			space += 1
+		for _ in range(large_spaces):
+			self.parking_spaces[CarType.LARGE].append(ParkingSpace(CarType.LARGE))
+			space += 1
+
 
 	def get_empty_parking_spaces(self):
-		pass
+		empty_spaces = []
+		for space in self.parking_spaces:
+			if space.is_empty:
+				empty_spaces.append(space)
+		return empty_spaces
 
 
 class ParkingSpace:
