@@ -1,35 +1,38 @@
 # parking_lot.py
 from abc import ABC, abstractmethod
 from enum import Enum
+from collections import deque
 
 class ParkingLot:
 
 	def __init__(self, small_spaces, medium_spaces, large_spaces):
-		self.parking_spaces = {CarType.SMALL: [],
-							   CarType.MEDIUM: [],
-							   CarType.LARGE: []}
-		self.create_parking_lot(small_spaces, medium_spaces, large_spaces)
+		self.parking_spaces = {CarType.SMALL: deque(),
+							   CarType.MEDIUM: deque(),
+							   CarType.LARGE: deque()}
+		self.__create_parking_lot(small_spaces, medium_spaces, large_spaces)
 
 
-	def create_parking_lot(self, small_spaces, medium_spaces, large_spaces):
-
-		space = 1
+	def __create_parking_lot(self, small_spaces, medium_spaces, large_spaces):
 
 		for _ in range(small_spaces):
 			self.parking_spaces[CarType.SMALL].append(ParkingSpace(CarType.SMALL))
-			space += 1
 		for _ in range(medium_spaces):
 			self.parking_spaces[CarType.MEDIUM].append(ParkingSpace(CarType.MEDIUM))
-			space += 1
 		for _ in range(large_spaces):
 			self.parking_spaces[CarType.LARGE].append(ParkingSpace(CarType.LARGE))
-			space += 1
 
-	def get_parking_lot_details(self):
-		return self.parking_spaces
+	def return_number_of_parking_spaces(self, size):
+		return len(self.parking_spaces[size])
 
 	def get_open_parking_spot(self, size):
-		ad
+		if not self.parking_spaces[size][0].is_empty:
+			return None
+		else:
+			return self.parking_spaces[size].popleft()
+
+	@abstractmethod
+	def park_car(self, car):
+		pass
 
 
 class ParkingSpace:
