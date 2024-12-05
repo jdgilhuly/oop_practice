@@ -1,7 +1,7 @@
 # parking_lot.py
 from abc import ABC, abstractmethod
 from enum import Enum
-from collections import deque
+import datetime
 
 
 class ParkingLot:
@@ -38,24 +38,24 @@ class ParkingLot:
 		if self.spaces_available[size] == 0:
 			return None, None
 		else:
-			for ticket, space in self.parking_spaces.items():
+			for space_number, space in self.parking_spaces.items():
 				if space.is_empty:
-					return ticket, space
+					return space_number, space
 			return None, None
 
 	def return_number_of_parking_spaces(self, size):
 		return self.spaces_available[size]
 
 	def park(self, car):
-		ticket, parking_space = self.__get_open_parking_spot(car.type)
+		space_number, parking_space = self.__get_open_parking_spot(car.type)
 		if parking_space:
 			parking_space.park_car(car.type)
 			self.spaces_available[car.type] -= 1
-			return ticket
+			return space_number
 		return None
 
-	def unpark(self, ticket_number):
-		parking_space = self.parking_spaces[ticket_number]
+	def unpark(self, space_number):
+		parking_space = self.parking_spaces[space_number]
 		parking_space.unpark_car()
 		self.spaces_available[parking_space.size] += 1
 
@@ -92,20 +92,49 @@ class CarType(Enum):
 	MEDIUM = 2
 	LARGE = 3
 
-
-# Init Cars
-small_car = Car(CarType.SMALL, "red")
-print(small_car.get_car_details())
-
-# Init Lot
-parking_lot = ParkingLot(2, 2, 2)
+class Ticket:
+	def __init__(self, ticket_number, entry_time):
+		self.ticket_number = ticket_number
+		self.entry_time = entry_time
+		self.is_paid = False
 
 
-# Test Parking
-print(parking_lot.return_number_of_parking_spaces(CarType.SMALL.value))
-ticket = parking_lot.park(small_car)
-print(parking_lot.return_number_of_parking_spaces(CarType.SMALL.value))
-parking_lot.unpark(ticket)
-print(parking_lot.return_number_of_parking_spaces(CarType.SMALL.value))
+class TicketMachine:
+	def __init__(self):
+		self.ticket_number = 0
+		self.tickets = {}
+
+	def get_ticket(self):
+		self.ticket_number += 1
+		self.tickets[self.ticket_number] = Ticket(self.ticket_number, datetime.datetime.now())
+		return self.ticket_number
+
+	def pay_ticket(self, ticket_number):
+		self.tickets[ticket_number].is_paid = True
+		return self.calculate_parking_fee(self.tickets[ticket_number].entry_time)
+
+	def calculate_parking_fee(self, entry_time):
+		exit_time = datetime.datetime.now()
+		time_difference = exit_time - entry_time
+		return time_difference.total_minutes() * 0.05
+
+def test_parking_lot():
+
+	# Init Parking Lot
+	parking_lot = ParkingLot(2, 2, 2)
 
 
+	ticket_machine = TicketMachine()
+
+
+	# Init Cars
+	small_car = Car(CarType.SMALL, "red")
+	small_car_2 = Car(CarType.SMALL, "blue")
+	small_car_3 = Car(CarType.SMALL, "green")
+	medium_car = Car(CarType.MEDIUM, "blue")
+	large_car = Car(CarType.LARGE, "green")
+
+
+	# Test Parking
+
+test_parking_lot()
