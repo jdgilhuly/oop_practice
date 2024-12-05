@@ -51,8 +51,27 @@ class Ante:
         return self.amount
 
 class Hand:
-    pass
+    def __init__(self, cards):
+        self.score = 0
 
-class Round:
-    def __init__(self) -> None:
-        self.
+    def __calc_card_score(card):
+        if isinstance(card, int):
+            return card
+        if card == "A":
+            return 1
+        else:
+            return 10
+    
+
+    def return_hand_score(self):
+        self.score = 0
+
+
+
+class Round(BlackJack):
+    def __init__(self, players, dealer) -> None:
+        players =
+        pass
+
+    def startRound(players, dealer):
+        pass
