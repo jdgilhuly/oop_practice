@@ -7,7 +7,9 @@ from collections import deque
 class ParkingLot:
 
 	def __init__(self, small_spaces, medium_spaces, large_spaces):
+
 		self.parking_spaces = {}
+
 		self.spaces_available = {
 			CarType.SMALL.value: small_spaces,
 			CarType.MEDIUM.value: medium_spaces,
@@ -34,23 +36,23 @@ class ParkingLot:
 
 	def __get_open_parking_spot(self, size):
 		if self.spaces_available[size] == 0:
-			return None
+			return None, None
 		else:
-			for space in self.parking_spaces[size]:
+			for ticket, space in self.parking_spaces.items():
 				if space.is_empty:
-					self.spaces_available[size] -= 1
-					return space
-			return None
+					return ticket, space
+			return None, None
 
 	def return_number_of_parking_spaces(self, size):
 		return self.spaces_available[size]
 
 	def park(self, car):
-		parking_space = self.__get_open_parking_spot(car.type)
+		ticket, parking_space = self.__get_open_parking_spot(car.type)
 		if parking_space:
 			parking_space.park_car(car.type)
-			return True
-		return False
+			self.spaces_available[car.type] -= 1
+			return ticket
+		return None
 
 	def unpark(self, ticket_number):
 		parking_space = self.parking_spaces[ticket_number]
@@ -101,7 +103,9 @@ parking_lot = ParkingLot(2, 2, 2)
 
 # Test Parking
 print(parking_lot.return_number_of_parking_spaces(CarType.SMALL.value))
-parking_lot.park(small_car)
+ticket = parking_lot.park(small_car)
+print(parking_lot.return_number_of_parking_spaces(CarType.SMALL.value))
+parking_lot.unpark(ticket)
 print(parking_lot.return_number_of_parking_spaces(CarType.SMALL.value))
 
 
