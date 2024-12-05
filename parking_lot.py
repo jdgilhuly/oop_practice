@@ -25,13 +25,8 @@ class ParkingLot:
 			self.parking_spaces[CarType.LARGE].append(ParkingSpace(CarType.LARGE))
 			space += 1
 
-
-	def get_empty_parking_spaces(self):
-		empty_spaces = []
-		for space in self.parking_spaces:
-			if space.is_empty:
-				empty_spaces.append(space)
-		return empty_spaces
+	def get_parking_lot_details(self):
+		return self.parking_spaces
 
 
 class ParkingSpace:
