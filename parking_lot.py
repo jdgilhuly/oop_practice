@@ -28,6 +28,9 @@ class ParkingLot:
 	def get_parking_lot_details(self):
 		return self.parking_spaces
 
+	def get_open_parking_spot(self, size):
+		ad
+
 
 class ParkingSpace:
 
@@ -66,3 +69,11 @@ class CarType(Enum):
 
 x = Car(CarType.SMALL, "red")
 print(x.get_car_details())
+
+
+parking_lot = ParkingLot(2, 2, 2)
+print(parking_lot.get_parking_lot_details())
+
+small_car = Car(CarType.SMALL, "red")
+parking_lot.park_car(small_car)
+print(parking_lot.get_parking_lot_details())
