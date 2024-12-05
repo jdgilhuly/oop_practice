@@ -30,9 +30,12 @@ class ParkingLot:
 		else:
 			return self.parking_spaces[size].popleft()
 
-	@abstractmethod
-	def park_car(self, car):
-		pass
+	def park(self, car):
+		open_space = self.get_open_parking_spot(car.type)
+		if open_space:
+			if open_space.park_car(car.type):
+				return True
+		return False
 
 
 class ParkingSpace:
