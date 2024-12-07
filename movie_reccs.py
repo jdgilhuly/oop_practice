@@ -57,7 +57,7 @@ class RecommendationSystem:
     def __get_most_recent_recc(self, movies):
         recs = []
         for movie in movies:
-            heapq.heappush((-movie.get_movie_rating(), movie))
+            heapq.heappush(recs, (-movie.get_movie_rating(), movie))
         return recs
 
     def return_reccomendation(self):
@@ -66,7 +66,9 @@ class RecommendationSystem:
 
 class Feed:
     def __init__(self):
-        self.rec_system = RecommendationSystem()
+        self.rec_system = RecommendationSystem([])
 
     def show_reccs(self):
         print(self.rec_system.return_reccomendation())
+
+    
