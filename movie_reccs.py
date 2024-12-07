@@ -13,3 +13,15 @@
 
 class User:
     pass
+
+class RecommendationSystem:
+    pass
+
+class Movie:
+    pass
+
+class Feed:
+    pass
+
+class Recommendation:
+    pass
