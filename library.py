@@ -1,5 +1,14 @@
 class Library:
 	def __init__(self):
+		pass
+
+class Computer:
+	def __init__(self, books):
+		self.books = books
+
+	def get_book_genre(self, book_name):
+		return self.books[book_name].genre
+			
 
 class Book:
 	def __init__(self, title, author, genre):
