@@ -71,4 +71,4 @@ class Feed:
     def show_reccs(self):
         print(self.rec_system.return_reccomendation())
 
-    
+
