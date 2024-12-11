@@ -6,8 +6,8 @@
 
 # tickets correspond with spaces
 
-import enum
-class CarSizes(enum.Enum):
+from enum import Enum
+class Size(Enum):
     SMALL = 1
     MEDIUM = 2
     BIG = 3
@@ -26,12 +26,21 @@ class Space:
 
 class ParkingLot:
     def __init__(self, large_spots, medium_spots, small_spots):
+        self.spots = {}
+
+
+    def __create_lot(self, large_spots, medium_spots, small_spots)
+        spot_number = 0
         for _ in range(large_spots):
-            pass
+            self.spots[spot_number] = Space(spot_number, CarSize.LARGE)
+            spot_number += 1
         for _ in range(medium_spots):
-            pass
+            self.spots[spot_number] = Space(spot_number, CarSize.MEDIUM)
+            spot_number += 1
         for _ in range(small_spots):
-            pass
+            self.spots[spot_number] = Space(spot_number, CarSize.SMALL)
+            spot_number += 1
+
 
 
 class Ticket:
