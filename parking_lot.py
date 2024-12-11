@@ -6,24 +6,33 @@
 
 # tickets correspond with spaces
 
-class Car:
-    def __init__(self, type):
-        self.type =
-    pass
-
 import enum
 class CarSizes(enum.Enum):
     SMALL = 1
     MEDIUM = 2
     BIG = 3
 
+class Car:
+    def __init__(self, type):
+        self.type = type
 
+    def print_car_type(self):
+        print(self.type)
 
 class Space:
-    pass
+    def __init__(self, space_number, size):
+        self.space_number = space_number
+        self.size = size
 
 class ParkingLot:
-    pass
+    def __init__(self, large_spots, medium_spots, small_spots):
+        for _ in range(large_spots):
+            pass
+        for _ in range(medium_spots):
+            pass
+        for _ in range(small_spots):
+            pass
+
 
 class Ticket:
     pass
