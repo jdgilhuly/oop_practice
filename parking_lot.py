@@ -27,29 +27,40 @@ class Space:
 class ParkingLot:
     def __init__(self, large_spots, medium_spots, small_spots):
         self.spots = {}
+        self.large_spots_available = large_spots
+        self.medium_spots_available = medium_spots
+        self.small_spots_available = small_spots
+        self.__create_lot(large_spots, medium_spots, small_spots)
 
-
-    def __create_lot(self, large_spots, medium_spots, small_spots)
+    def __create_lot(self, large_spots, medium_spots, small_spots):
         spot_number = 0
         for _ in range(large_spots):
-            self.spots[spot_number] = Space(spot_number, CarSize.LARGE)
+            self.spots[spot_number] = Space(spot_number, Size.LARGE)
             spot_number += 1
         for _ in range(medium_spots):
-            self.spots[spot_number] = Space(spot_number, CarSize.MEDIUM)
+            self.spots[spot_number] = Space(spot_number, Size.MEDIUM)
             spot_number += 1
         for _ in range(small_spots):
-            self.spots[spot_number] = Space(spot_number, CarSize.SMALL)
+            self.spots[spot_number] = Space(spot_number, Size.SMALL)
             spot_number += 1
-
 
 
 class Ticket:
-    pass
+    def __init__(self, ticket_number, entry_time):
+        self.ticket_number = ticket_number
+        self.entry_time = entry_time
 
 class TicketMachine:
-    pass
+    def __init__(self):
+        self.ticket_number = 0
+
+    def get_ticket(self):
+        self.ticket_number += 1
+        return Ticket(self.ticket_number)
 
 from abc import ABC, abstractmethod
 class TicketPricingStrategy(ABC):
     pass
+
+
 
